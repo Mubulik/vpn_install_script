@@ -2,8 +2,18 @@
 # Script créé par Lilian Lambert, le 19/01/2026, élève de l'UMLP, en BUT1 R&T
 # Fonctionne sous : Debian13
 
+# Vérification de l'existence ou non d'une connexion VPN avec le nom donné par l'utilisateur
+vpnExists=1
+while [ $vpnExists -eq 1 ]; do
+    echo -n "Entrez le nom de la connexion VPN : " ; read vpnName
+    if [ -e "/etc/NetworkManager/system-connections/$vpnName.nmconnection" ]; then
+        echo "La connexion VPN $vpnName existe déjà. Veuillez choisir un autre nom ou la supprimer."
+        exit 1
+    fi
+    vpnExists=0
+done
+
 # Init des variables
-echo -n "Entrez le nom de la connexion VPN : " ; read vpnName
 echo -n "Entrez votre nom d'utilisateur dans le domaine (sans le @ufc) : " ; read user
 address="vpn20-2.univ-fcomte.fr"
 domainName="ufc"
