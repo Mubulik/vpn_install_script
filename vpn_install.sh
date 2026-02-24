@@ -54,12 +54,7 @@ apt-get install -y network-manager-strongswan libstrongswan-extra-plugins libcha
 log "Configuration de la connexion VPN..."
 uuid=$(nmcli connection add con-name "$vpnName" type vpn vpn-type strongswan | awk -F'[()]' '{print $2}')
 
-# Suppression du fichier créé dans /etc/NetworkManager/system-connections
-rm /etc/NetworkManager/system-connections/"$vpnName".nmconnection
-
-# Création du fichier de conf de la connexion
-touch /etc/NetworkManager/system-connections/"$vpnName".nmconnection
-
+# Mise à jour du fichier de conf avec les infos fournies
 echo "[connection]
 id=$vpnName
 uuid=$uuid
